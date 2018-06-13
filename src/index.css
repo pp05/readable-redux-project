@@ -85,7 +85,7 @@ button.modalButton {
   top: 20px;
   left: 15px;
   width: 50px;
-  height: 53px;
+  height: 30px;
   background: white;
   background-image: url('./icons/arrow-back.svg');
   background-position: center;
@@ -94,7 +94,20 @@ button.modalButton {
   font-size: 0;
 }
 
-.postDetailsContainer{
+.postDetailsContainer, .homepage{
     margin: auto;
     width: 50%;
+}
+.homepage{
+    margin-top: 50px;
+    }
+
+div.sectionsHeader{
+    color : gray;
+    margin-bottom : 20px;
+    margin-top : 20px;
+}
+
+.cardVote {
+      padding: 0px 0px 10px 16px;
 }

@@ -15,6 +15,10 @@ export const fetchPostsFromServer = () =>
   fetch(`${api}/posts`,  { headers })
   	.then(data => data.json())
 
+export const fetchPostFromServer = (id) =>
+  fetch(`${api}/posts/${id}`,  { headers })
+    .then(data => data.json())
+
   	
 export const fetchCategoriesFromServer = () =>
   fetch(`${api}/categories`,  { headers })

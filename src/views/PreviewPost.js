@@ -44,7 +44,7 @@ class PreviewPost extends Component {
 						<Button icon='edit' floating primary mini onClick = {this.handleClick}/>
 					</div> 
 						<div className='postPreview'>
-						<Link className='heading' to={`/viewpost/${id}`} >{title}</Link>
+						<Link className='heading' to={`/${category}/${id}`} >{title}</Link>
 						<div className='subheading'>{`Category: [${category}] | Author: ${author} | Posted on: ${this.formatDate(timestamp)}`}</div>
 						<div className='comments'>{commentCount} Comments</div>
 						<span>{voteScore} votes so far  </span>

@@ -5,6 +5,7 @@
 import { combineReducers } from 'redux';
 import {
 	GET_POSTS,
+	GET_POST,
 	GET_CATEGORIES,
 	SET_CATEGORY,
 	EDIT_POST,
@@ -22,9 +23,10 @@ import {
 function postsById (state={}, action){
 	switch(action.type){
 		case GET_POSTS : 		
-
 		//object spread syntax, return the same state but with new content
 			return {...state, ...createObj(action.posts)};
+		case GET_POST : 
+			return {...state, ...createObj([action.posts])}
 		case EDIT_POST: 
 		case ADD_POST :
 		case VOTE_UP_POST:

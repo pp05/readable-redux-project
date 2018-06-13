@@ -82,7 +82,7 @@ class PostPreviewSection extends Component {
 		return (		
 			<div>
 			<ListDivider/>
-			<ListSubHeader caption='Posts' />
+			<div className='sectionsHeader'>Posts</div>
 			<Button primary  label='Add New Post' icon='add' onClick={()=>this.openPostModal("New Post",'')} />
 			 			 	
 			  {Object.values(this.sortBy).map((sortByObj) => {
@@ -131,7 +131,6 @@ this.props.dispatch(actioncreatorname)
 function mapDispatchToProps(dispatch){
 	return{
 		fetchPosts : () => {
-			console.log('I am in fetchPosts')
 			dispatch(fetchPosts())}
 	}
 }

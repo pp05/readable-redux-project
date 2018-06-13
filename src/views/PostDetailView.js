@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
 import Modal from 'react-modal';
 import Card from 'react-toolbox/lib/card/Card';
 import CardTitle from 'react-toolbox/lib/card/CardTitle';
@@ -12,9 +12,10 @@ import ListItem from 'react-toolbox/lib/list/ListItem';
 import ListDivider from 'react-toolbox/lib/list/ListDivider';
 import PostForm from './PostForm';
 import CommentForm from './CommentForm'
+import PageNotFound from './PageNotFound'
 
 import {fetchCommentsForPost, voteUpComment, voteDownComment, 
-	     addComment, voteUpPost, voteDownPost, deletePost, deleteComment} from '../actions'
+	     addComment, voteUpPost, voteDownPost, deletePost, deleteComment, fetchPost} from '../actions'
 
 class PostDetailView extends Component {
 	state = {
@@ -26,7 +27,9 @@ class PostDetailView extends Component {
       const { id } = this.props.match.params;
 
       this.setState({postId : id});
-
+      if(!this.props.post){
+      	this.props.getPost(id);
+      }
       if(this.props.comments.length === 0){
       	this.props.getComments(id);
       }
@@ -99,15 +102,16 @@ class PostDetailView extends Component {
 	}
 	render (){
 		if(! this.props.post){
-			return (<div>Page Deleted</div>);
+			return (<div><Route component={PageNotFound} /></div>);
 		}
-		const {  category,  title, author, timestamp, commentCount, voteScore,
+		const {  category,  title, author, timestamp, voteScore,
 		         body  } = this.props.post;
 		const {comments} = this.props;
+		const commentCount = this.props.comments ? Object.values(this.props.comments).length : 0;
 		return (<div>				
 			    <Link className="backArrow" to='/'>Back</Link>
 			    <div className="postDetailsContainer">
-			    <div>Post Details</div>
+			    <div className='sectionsHeader'>Post Details</div>
 				 <Card >
 				 	    <CardTitle avatar={this.getAvatarIcon()}
       						title={title}
@@ -115,7 +119,8 @@ class PostDetailView extends Component {
 
     						/>
     					<CardText>{body} </CardText>
-    					<span className='cardVote'>{voteScore} votes so far  </span>
+    					<div className='cardVote'>{voteScore} vote so far  </div>
+    					<div className='cardVote'>{commentCount} comment so far  </div>
 						
     					<CardActions>
     						<Button icon = 'edit' label='Edit' className='modalButton' onClick={this.handleEditPost}/>
@@ -127,13 +132,13 @@ class PostDetailView extends Component {
 				 </Card>
 				 <pre/>
 				 <pre/>
-				 <div> Comments </div>
+				 <div className='sectionsHeader'>Comments</div>
 				 <List>
 				 	<ListDivider />
 				 		<Button primary  label='Add New Comment' icon='add' onClick={()=>this.addNewComment()} />
 				 	<ListDivider />
 				 	{comments.map((comment) => {
-				 		return (<div>
+				 		return (<div key={comment.id}>
 				 					<ListItem key={comment.id} itemContent = {this.getCommentElement(comment)}></ListItem>
 				 			     	<ListDivider />
 				 			     </div>)
@@ -192,6 +197,9 @@ function mapDispatchToProps(dispatch){
 		},
 		deleteComment : (id) => {
 			dispatch(deleteComment(id))
+		},
+		getPost : (id) => {
+			dispatch(fetchPost(id))
 		}
 	}
 }

@@ -17,6 +17,7 @@ import '../node_modules/material-design-icons/iconfont/material-icons.css'
 
 import HomePage from './views/HomePage';
 import PostDetailView from './views/PostDetailView';
+import PageNotFound from './views/PageNotFound'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -31,7 +32,10 @@ class App extends Component {
         <BrowserRouter>
           <Switch> 
             <Route exact path='/' component={HomePage}/>
+            <Route exact path='/:category' component={HomePage}/>
             <Route exact path='/viewpost/:id' component={PostDetailView}/>
+            <Route exact path='/:category/:id' component={PostDetailView}/>
+            <Route exact path='/PageNotFound' component={PageNotFound}/>
           </Switch>
         </BrowserRouter>
        </ThemeProvider>

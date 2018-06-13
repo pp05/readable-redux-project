@@ -1,5 +1,6 @@
 import * as DBServices from '../utils/DBServices'
 export const GET_POSTS = 'GET_POSTS'
+export const GET_POST = 'GET_POST'
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SET_CATEGORY = 'SET_CATEGORY'
 export const EDIT_POST = 'EDIT_POST'
@@ -40,7 +41,11 @@ export const fetchPosts = () => dispatch => (
       .fetchPostsFromServer()
       .then(posts => dispatch(postsById(posts, GET_POSTS)))
 );
-
+export const fetchPost = (id) => dispatch => (
+    DBServices
+      .fetchPostFromServer(id)
+      .then(post => dispatch(postsById(post, GET_POST)))
+);
 export const fetchCategories = () => dispatch => (
   DBServices
       .fetchCategoriesFromServer()

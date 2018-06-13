@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {  withRouter } from 'react-router-dom';
 import {fetchCategories, setCategory} from '../actions';
 import Button from 'react-toolbox/lib/button/Button';
-//import  Button  from 'semantic-ui-react/src/elements/Button/index';
 
 class CategoriesSection extends Component {
 	state ={
 		category : ''
 	}
   componentWillMount () {
-  	const initialCategory = "All_Categories";
   	this.props.fetchCategories();  
-  	this.props.setCategory(initialCategory); 
-  	this.setState({category:initialCategory}); 
+
+  		this.setState({category:this.props.categorySelected});
+
   }
 
   buttonClicked = (category) => {
   	//console.log(category + self);
   	this.props.setCategory(category);
-  	this.setState({category:category});
+  	this.setState({category:category, toCategory: true});
+  	this.props.history.push('/'+category);
+  	
   }
 
 /**
@@ -38,9 +40,13 @@ class CategoriesSection extends Component {
   }
 
   renderCategoriesSection = () =>{
+  	/**if(this.state.toCategory){
+  		const redirectURL = '/' +this.state.category
+  		return <Redirect to={redirectURL}/>
+  	}**/
   	var allCategoryObj = { 'name':'All Categories', path:'All_Categories'}
   	return ( <div>
-  				<div>Categories</div>
+  				<div className='sectionsHeader'>Categories</div>
   				{this.getCategoryButtonJsx(allCategoryObj)}
 				{this.props.categories.map((category) => 
 					{return (this.getCategoryButtonJsx(category))} )
@@ -63,7 +69,8 @@ class CategoriesSection extends Component {
 **/
 function mapStateToProps(state, ownProps){
 	return {
-		categories : Object.values(state.getCategories)
+		categories : Object.values(state.getCategories),
+		categorySelected : (state.setCategory && state.setCategory.category) ? (state.setCategory.category) : 'All_Categories'
 	}
 }
 
@@ -80,4 +87,4 @@ function mapDispatchToProps(dispatch){
 		}
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesSection)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoriesSection))
