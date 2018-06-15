@@ -10,11 +10,7 @@ import reducer from './reducers';
 import theme from './assets/react-toolbox/theme.js'
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 import './assets/react-toolbox/theme.css'; 
-/**import '../node_modules/mdi/css/materialdesignicons.min.css' **/
 import '../node_modules/material-design-icons/iconfont/material-icons.css'
-
-
-
 import HomePage from './views/HomePage';
 import PostDetailView from './views/PostDetailView';
 import PageNotFound from './views/PageNotFound'

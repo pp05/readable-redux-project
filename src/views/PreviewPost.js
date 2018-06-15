@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import  ListItem from 'react-toolbox/lib/list/ListItem';
 import  ListDivider from 'react-toolbox/lib/list/ListDivider';
 import Button from 'react-toolbox/lib/button/Button';
-import {voteUpPost, voteDownPost} from '../actions';
+import {voteUpPost, voteDownPost,deletePost} from '../actions';
 import '../assets/react-toolbox/theme.css';
 class PreviewPost extends Component {
 
@@ -24,7 +24,9 @@ class PreviewPost extends Component {
 		this.props.postSelected(this.props.post.id);
 	}
 
-
+	handleDeletePost = () => {
+		this.props.deletePost(this.props.post.id);
+	}
 	render (){
         return(
         	<div>
@@ -50,6 +52,7 @@ class PreviewPost extends Component {
 						<span>{voteScore} votes so far  </span>
 						<Button icon='thumb_up' floating primary mini onClick = {this.upVoteClicked} />					
 						<Button icon='thumb_down' floating primary mini onClick = {this.downVoteClicked}/>
+						<Button icon ='delete' floating  className='modalButton' onClick={() => this.handleDeletePost()}/>
 					</div>
 			    </div>);
 	}
@@ -66,7 +69,10 @@ function mapDispatchToProps (dispatch){
 		voteUpPost: (id) => {
 			dispatch(voteUpPost(id))},
 		voteDownPost: (id) => {
-			dispatch(voteDownPost(id))}
+			dispatch(voteDownPost(id))},
+	    deletePost : (id) => {
+			dispatch(deletePost(id))
+		}
 	}
 }
 export default connect(mapStateToProps,mapDispatchToProps)(PreviewPost)

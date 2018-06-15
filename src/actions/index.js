@@ -1,17 +1,18 @@
 import * as DBServices from '../utils/DBServices'
-export const GET_POSTS = 'GET_POSTS'
-export const GET_POST = 'GET_POST'
-export const GET_CATEGORIES = 'GET_CATEGORIES'
-export const SET_CATEGORY = 'SET_CATEGORY'
-export const EDIT_POST = 'EDIT_POST'
-export const ADD_POST = 'ADD_POST'
-export const VOTE_UP_POST = 'VOTE_UP_POST'
-export const VOTE_DOWN_POST = 'VOTE_DOWN_POST'
-export const GET_COMMENTS = 'GET_COMMENTS'
-export const EDIT_COMMENTS = 'EDIT_COMMENTS'
-export const ADD_COMMENTS = 'ADD_COMMENTS'
-export const DELETE_POST = 'DELETE_POST'
-export const DELETE_COMMENTS = 'DELETE_COMMENTS'
+import {  GET_POSTS,
+  GET_POST,
+  GET_CATEGORIES,
+  SET_CATEGORY,
+  EDIT_POST,
+  ADD_POST,
+  DELETE_POST,
+  VOTE_UP_POST,
+  VOTE_DOWN_POST,
+  GET_COMMENTS,
+  EDIT_COMMENTS,
+  ADD_COMMENTS,
+  DELETE_COMMENTS
+ } from './types'
 
 
 export const setCategory = (category) =>({
@@ -63,7 +64,7 @@ export const deletePost = (id, callback) => dispatch => (
       .deletePostInDB(id)
       .then(post => dispatch(postsById(post,DELETE_POST)))
       .then(()=> {
-      	console.log("calling callback" )
+      	if(callback)
       	callback()})
 );
 

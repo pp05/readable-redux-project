@@ -14,8 +14,7 @@ import PostForm from './PostForm';
 import CommentForm from './CommentForm'
 import PageNotFound from './PageNotFound'
 
-import {fetchCommentsForPost, voteUpComment, voteDownComment, 
-	     addComment, voteUpPost, voteDownPost, deletePost, deleteComment, fetchPost} from '../actions'
+import * as actions from '../actions'
 
 class PostDetailView extends Component {
 	state = {
@@ -28,10 +27,10 @@ class PostDetailView extends Component {
 
       this.setState({postId : id});
       if(!this.props.post){
-      	this.props.getPost(id);
+      	this.props.fetchPost(id);
       }
       if(this.props.comments.length === 0){
-      	this.props.getComments(id);
+      	this.props.fetchCommentsForPost(id);
       }
     }
     formatDate =(timestamp) => {
@@ -172,35 +171,4 @@ function mapStateToProps(state, ownProps){
 	}
 }
 
-function mapDispatchToProps(dispatch){
-	return{
-		getComments : (id) => {
-			dispatch(fetchCommentsForPost(id))
-		},
-		voteUpComment: (id) => {
-			dispatch(voteUpComment(id))
-		},
-		voteDownComment : (id) => {
-			dispatch(voteDownComment(id))
-		},
-		addNewComment : (data) => {
-			dispatch(addComment(data));
-		},
-		voteUpPost: (id) => {
-			dispatch(voteUpPost(id))
-		},
-		voteDownPost: (id) => {
-			dispatch(voteDownPost(id))
-		},
-		deletePost : (id, callback) => {
-			dispatch(deletePost(id, callback))
-		},
-		deleteComment : (id) => {
-			dispatch(deleteComment(id))
-		},
-		getPost : (id) => {
-			dispatch(fetchPost(id))
-		}
-	}
-}
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetailView);
+export default connect(mapStateToProps, actions)(PostDetailView);

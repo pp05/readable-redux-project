@@ -40,10 +40,6 @@ class CategoriesSection extends Component {
   }
 
   renderCategoriesSection = () =>{
-  	/**if(this.state.toCategory){
-  		const redirectURL = '/' +this.state.category
-  		return <Redirect to={redirectURL}/>
-  	}**/
   	var allCategoryObj = { 'name':'All Categories', path:'All_Categories'}
   	return ( <div>
   				<div className='sectionsHeader'>Categories</div>

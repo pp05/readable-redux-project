@@ -18,7 +18,7 @@ import {
 	ADD_COMMENTS,
 	DELETE_COMMENTS
 
-} from '../actions'
+} from '../actions/types'
 
 function postsById (state={}, action){
 	switch(action.type){

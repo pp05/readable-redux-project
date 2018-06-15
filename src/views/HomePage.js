@@ -8,12 +8,10 @@ class HomePage extends Component {
 
 componentWillMount () {
 	const category = this.props.match.params.category ? 
-		this.props.match.params.category : 'All_Categories';
+			this.props.match.params.category : 'All_Categories';
 	this.props.setCategory(category);
 	const postId = this.props.match.params.id;
-	if(postId){
 
-	}
 }
  	render(){
         if(this.props.match.params.category && this.props.match.params.id){

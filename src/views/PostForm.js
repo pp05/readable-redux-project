@@ -12,7 +12,8 @@ class PostForm extends Component {
 		category: '',
 		author: '',
 		body:'',
-		id:''
+		id:'',
+		errorInForm:false
 	}
 	getTimeStampElement =(timestamp) => {
 		var timestampVal = new Date(timestamp).toLocaleString();
@@ -35,25 +36,38 @@ class PostForm extends Component {
     }
 
  	handleSavePost = () =>{
- 		if(this.state.id === ''){
+ 		if(!this.state.category || !this.state.title){
+ 			this.setState({errorInForm : true});
+ 		}else if(this.state.id === ''){
  			var nowTime = new Date().getTime()
  			//this.setState({id :  new Date().getTime(), timestamp:new Date().getTime()});
- 			this.props.addNewPost({...this.state, ['id'] :nowTime,['timestamp']:nowTime })
+ 				this.props.addNewPost({...this.state, ['id'] :nowTime,['timestamp']:nowTime })
+ 				this.props.closePostModal && this.props.closePostModal()
+ 			
  		}else{
  			this.props.editPost( this.state, this.state.id)
+ 			this.props.closePostModal && this.props.closePostModal()
  		}
- 		this.props.closePostModal && this.props.closePostModal()
+ 		
+ 	}
+ 	handleCategoryChanged = (newValue) => {
+ 		if(newValue !== ''){
+ 		this.setState({errorOnCategory:false});
+ 		}
+ 		this.handleChange('category', newValue)
  	}
 
  	render(){
  		const {categories} = this.props;
- 		const {title, category, author, body, timestamp} = this.state;
+ 		const {title, category, author, body, timestamp, errorInForm} = this.state;
+ 		var errorMessageOnCategory = errorInForm && (category==='') && 'Please select a category';
+ 		var errorMessageOnTitle = errorInForm && (title==='') && 'Please set a title';
 		return (<div>
 
 				<section>
-					<Input type='text' label='Title' value={title} required onChange={this.handleChange.bind(this, 'title')}/>
-					<Dropdown label ='Category' source={categories} value={category} required onChange={this.handleChange.bind(this, 'category')}/>
-					<Input type='text' label='Author'  value={author} required onChange={this.handleChange.bind(this, 'author')}/>
+					<Input type='text' label='Title' value={title} required error = {errorMessageOnTitle} onChange={this.handleChange.bind(this, 'title')}/>
+					<Dropdown label ='Category' error={errorMessageOnCategory} source={categories} value={category} required onChange={(value) => this.handleCategoryChanged(value)}/>
+					<Input type='text' label='Author'  value={author}  onChange={this.handleChange.bind(this, 'author')}/>
 					<Input type='text' label='Body' multiline maxLength={100} value={body} onChange={this.handleChange.bind(this, 'body')}/>	
 					{timestamp && this.getTimeStampElement(timestamp)}				
 				</section>
